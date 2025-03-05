@@ -52,21 +52,54 @@ bool makemove(char board[9][9], int inp_row, int inp_col, char player) {
     return true;
 }
 
-bool CheckSmallWin(char board[9][9], char player) {
+bool CheckSmallWin(char board[9][9], char player, int box) {
+
+        int rowOffset = box / 3 * 3;
+        int colOffset = box % 3 * 3;
+
     for (int i = 0; i < 3; i++) {
-        if (board[i][0] == player && board[i][1] == player
-            && board[i][2] == player)
-            return true;
-        if (board[0][i] == player && board[1][i] == player
-            && board[2][i] == player)
-            return true;
+        if (board[rowOffset + i][colOffset] == player && board[rowOffset+ i][colOffset + 1] == player
+            && board[rowOffset + i][colOffset + 2] == player)
+           goto win;
+        if (board[rowOffset][colOffset+ i] == player && board[rowOffset + 1][colOffset+ i] == player
+            && board[rowOffset + 2][colOffset + i] == player)
+            goto win;
     }
-    if (board[0][0] == player && board[1][1] == player && board[2][2] == player)
-        return true;
-    if (board[0][2] == player && board[1][1] == player && board[2][0] == player)
-        return true;
+    if (board[rowOffset][colOffset] == player && board[rowOffset + 1][colOffset + 1] == player && board[rowOffset + 2][colOffset + 2] == player)
+        goto win;
+    if (board[rowOffset][colOffset + 2] == player && board[rowOffset + 1][colOffset + 1] == player && board[rowOffset + 2][colOffset] == player)
+        goto win;
+
     return false;
 
+    win:
+    for (int i = 0; i < 3; i++) {
+        for(int j = 0; j < 3; j++) {
+            board[rowOffset + i][colOffset + j] = player;
+        }
+    }
+    return true;
 
 }
 
+bool CheckWin(char bigBoard[9], char player) {
+
+    for(int i = 0; i < 3; i++) {
+        if(bigBoard[i * 3] == player && bigBoard[i * 3 + 1] == player && bigBoard[i * 3 + 2] == player)
+            return true;
+    }
+    for(int j = 0; j < 3; j++) {
+        if(bigBoard[j] == player && bigBoard[j + 3] == player && bigBoard[j + 6])
+            return true;
+
+
+    }
+
+    if (bigBoard[0] == player && bigBoard[4] == player && bigBoard[8] == player)
+        return true;
+    if (bigBoard[2] == player && bigBoard[4] == player && bigBoard[6] == player)
+        return true;
+
+    return false;
+
+}

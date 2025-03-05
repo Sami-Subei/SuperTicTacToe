@@ -3,12 +3,14 @@
 using namespace std;
 
 bool makemove();
-bool CheckSmallWin(char board[9][9], char player);
+bool CheckSmallWin(char board[9][9], char player, int box);
+bool CheckWin(char bigBoard[9], char player);
 
 
 int main()
 {
     char board[9][9];
+    char bigBoard[9];
     bool gamerunning = false;
     int turn = 1;
     initializeBoard(board);
@@ -69,9 +71,23 @@ int main()
             continue;
         }
 
-        if (CheckSmallWin(board, player)) {
-            cout << "win!";
-        }
+
+
+
+        for(int box = 0; box < 9; box++) {
+            if(CheckSmallWin(board, player, box)) {
+                bigBoard[box] = player;
+
+                if(CheckWin(bigBoard, player)) {
+                    cout << "Player" << player << " wins the game!!!" << endl;
+                    BoardPrint(board);
+                    gamerunning = false;
+                    break;
+                }
+
+                }
+            }
+
 
 
 
