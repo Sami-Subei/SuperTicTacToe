@@ -1,8 +1,10 @@
 #include <iostream>
-#include "functions.h"
+#include "function.h"
 using namespace std;
 
 bool makemove();
+bool CheckSmallWin(char board[9][9], char player);
+
 
 int main()
 {
@@ -65,6 +67,10 @@ int main()
         if(makemove(board,inp_row,inp_col,player)) {
             BoardPrint(board);
             continue;
+        }
+
+        if (CheckSmallWin(board, player)) {
+            cout << "win!";
         }
 
 

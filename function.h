@@ -52,7 +52,21 @@ bool makemove(char board[9][9], int inp_row, int inp_col, char player) {
     return true;
 }
 
-bool SmallWin() {
+bool CheckSmallWin(char board[9][9], char player) {
+    for (int i = 0; i < 3; i++) {
+        if (board[i][0] == player && board[i][1] == player
+            && board[i][2] == player)
+            return true;
+        if (board[0][i] == player && board[1][i] == player
+            && board[2][i] == player)
+            return true;
+    }
+    if (board[0][0] == player && board[1][1] == player && board[2][2] == player)
+        return true;
+    if (board[0][2] == player && board[1][1] == player && board[2][0] == player)
+        return true;
+    return false;
+
 
 }
 
